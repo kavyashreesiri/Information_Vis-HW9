@@ -12,7 +12,7 @@ __Visualization__
 
 * Interactive elements you employed:  
 
-Tooltip
+Tooltip  
 Zoom in and Zoom out
 
 * Narrative storytelling elements  
