@@ -18,7 +18,7 @@ Zoom in and Zoom out
 * Narrative storytelling elements  
 
 
- * Address how the visualization answers the questions you raised in the Introduction  
+* Address how the visualization answers the questions you raised in the Introduction  
  
  
 __Design decisions__
