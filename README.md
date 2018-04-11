@@ -3,7 +3,7 @@ The H-1B is an employment-based, non-immigrant visa category for temporary forei
 
 
 
-__Data__  
+2. __Data__  
 *Dataset Source*   
         The Office of Foreign Labor Certification (OFLC) generates program data that is useful information about the immigration programs including the H1-B visa. The disclosure data updated annually is available at https://www.foreignlaborcert.doleta.gov/performancedata.cfm   
 * __Data Attributes__   
@@ -33,7 +33,7 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Type: Quantitative Data 
     * LON: longitude location co-ordinate of the Worksite.    
       Type: Quantitative Data   
-__Visualization__
+3. __Visualization__
 * Description:  
 
 
@@ -47,10 +47,10 @@ __Visualization__
 * Address how the visualization answers the questions you raised in the Introduction  
  
  
-__Design decisions__
+4. __Design decisions__
  choice of visualization type, size, color, scale, and other visual elements, as well as the use of sorting or other data transformations  
  
-__Development Process__
+5. __Development Process__
 * a commentary on the development process  
 
 * Roughly how much time did you spend developing your application?  
