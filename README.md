@@ -1,8 +1,7 @@
 1. __Introduction__
 The H-1B is an employment-based, non-immigrant visa category for temporary foreign workers in the United States.    For a foreign national to apply for H1-B visa, an US employer must offer a job and petition for H-1B visa with the US immigration department. This is the most common visa status applied for and held by international students once they complete college/ higher education (Masters, PhD) and work in a full-time position.   
-
-
-
+  * Motivation 
+    The main motivation behind considering this dataset is the fact that most of the strength are international students and I wanted to let them know what are the statistics of H-1B visas for a particular Industry and particular job type. Following the Recent Presidential Elections, there has been a lot of chaos in the United States about the H1-B visas and skilled immigrants, this was also a contributing factor in making us think about this dataset.   
 2. __Data__  
   * *Dataset Source*   
         The Office of Foreign Labor Certification (OFLC) generates program data that is useful information about the immigration programs including the H1-B visa. The disclosure data updated annually is available at https://www.foreignlaborcert.doleta.gov/performancedata.cfm   
@@ -55,9 +54,10 @@ These are the attributes that are relevant to my analysis and were obtained afte
  
 5. __Development Process__
   * The development process  
-    The whole process of implenting and learning was exciting and interesting.Went through few tutorilas to get basics strong.Especially the GeoJSON map of Unite dStates and binding data to Map took a lot of time.Understanding the difference betwen TopoJSON,GeoJSON,Leaflet and how they work consumed a lot of time. 
-    I have spent 6-7 hours all th ethree weeks to learn about different interactive tools and techniques.
-    I got to know about many good sources and interactive visualization tools available.
+    The whole process of implenting and learning was exciting and interesting.Went through few tutorilas to get basics strong.Especially the GeoJSON map of United States and binding data to Map took a lot of time.Understanding the difference betwen TopoJSON,GeoJSON,Leaflet and how they work consumed a lot of time. 
+    I had a huge CSV file which has more than 2.5 million records and GeoJSON which togetehr take a lot of time to load.It was difficult to implement changes and check.
+    I have spent 8-9 hours all the three weeks to learn about different interactive tools and techniques.
+    I got to know about many good sources and interactive visualization tools available.D3 community sources awere really helpful.
  
 
 __References__   
