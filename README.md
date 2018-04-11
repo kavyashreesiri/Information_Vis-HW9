@@ -55,9 +55,10 @@ These are the attributes that are relevant to my analysis and were obtained afte
  
 5. __Development Process__
   * The development process  
-    The whole process of implenting and learning was exciting and interesting.
-  * Roughly how much time did you spend developing your application?  
-  *  aspects took the most time?   
+    The whole process of implenting and learning was exciting and interesting.Went through few tutorilas to get basics strong.Especially the GeoJSON map of Unite dStates and binding data to Map took a lot of time.Understanding the difference betwen TopoJSON,GeoJSON,Leaflet and how they work consumed a lot of time. 
+    I have spent 6-7 hours all th ethree weeks to learn about different interactive tools and techniques.
+    I got to know about many good sources and interactive visualization tools available.
+ 
 
 __References__   
 http://maptimeboston.github.io/d3-maptime/  
