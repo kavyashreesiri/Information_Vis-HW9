@@ -30,5 +30,6 @@ __Development Process__
 *  aspects took the most time?   
 
 __References__   
-http://maptimeboston.github.io/d3-maptime/
-https://bl.ocks.org/mbostock/3885705
+http://maptimeboston.github.io/d3-maptime/  
+https://bl.ocks.org/mbostock/3885705  
+https://github.com/maptimeBoston/d3-maptime  
