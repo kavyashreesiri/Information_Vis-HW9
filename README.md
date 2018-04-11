@@ -4,8 +4,10 @@ The H-1B is an employment-based, non-immigrant visa category for temporary forei
 
 
 2. __Data__  
-*Dataset Source*   
+* Dataset Source*   
         The Office of Foreign Labor Certification (OFLC) generates program data that is useful information about the immigration programs including the H1-B visa. The disclosure data updated annually is available at https://www.foreignlaborcert.doleta.gov/performancedata.cfm   
+* Additional dataset :
+        This data set provides information about the hiring practices of employers who petition for foreign national workers.It has data from 2007-2017 which I have used to understand the growth in Recieved and Approved H-1B Petition Flings over years.  
 * __Data Attributes__   
 These are the attributes that are relevant to my analysis and were obtained after processing the original dataset.  
     * Case Status: This Describes the Details about status of an applicant after LCA processing, whether he/she is eligible for applying to H-1B.  
@@ -34,27 +36,28 @@ These are the attributes that are relevant to my analysis and were obtained afte
     * LON: longitude location co-ordinate of the Worksite.    
       Type: Quantitative Data   
 3. __Visualization__
-* Description:  
+   * Description:  
 
 
-* Interactive elements you employed:  
+   * Interactive elements you employed:  
         * Tooltip  
         * Zoom in and Zoom out
+        * Highlighting
 
-* Narrative storytelling elements  
+   * Narrative storytelling elements  
 
 
-* Address how the visualization answers the questions you raised in the Introduction  
+   * Address how the visualization answers the questions you raised in the Introduction  
  
  
 4. __Design decisions__
- choice of visualization type, size, color, scale, and other visual elements, as well as the use of sorting or other data transformations  
+ Choice of visualization type, size, color, scale, and other visual elements, as well as the use of sorting or other data transformations  
  
 5. __Development Process__
-* a commentary on the development process  
-
-* Roughly how much time did you spend developing your application?  
-*  aspects took the most time?   
+  * The development process  
+    The whole process of implenting and learning was exciting and interesting.
+  * Roughly how much time did you spend developing your application?  
+  *  aspects took the most time?   
 
 __References__   
 http://maptimeboston.github.io/d3-maptime/  
