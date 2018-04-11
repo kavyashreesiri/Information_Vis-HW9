@@ -7,7 +7,7 @@ The H-1B is an employment-based, non-immigrant visa category for temporary forei
   * *Dataset Source*   
         The Office of Foreign Labor Certification (OFLC) generates program data that is useful information about the immigration programs including the H1-B visa. The disclosure data updated annually is available at https://www.foreignlaborcert.doleta.gov/performancedata.cfm   
   * *Additional dataset*   
-        This data set provides information about the hiring practices of employers who petition for foreign national workers.It has data from 2007-2017 which I have used to understand the growth in Recieved and Approved H-1B Petition Flings over years.  
+        This data set provides information about the hiring practices of employers who petition for foreign national workersand it is made available by U.S Citizenship and Immigratio services Department.It has data from 2007-2017 which I have used to understand the growth in Recieved and Approved H-1B Petition Flings over years.  Data is available at : https://www.uscis.gov/tools/reports-studies/immigration-forms-data
 * __Data Attributes__   
 These are the attributes that are relevant to my analysis and were obtained after processing the original dataset.  
     * Case Status: This Describes the Details about status of an applicant after LCA processing, whether he/she is eligible for applying to H-1B.  
