@@ -69,5 +69,6 @@ https://www.congress.gov/bill/115th-congress/house-bill/170
 https://redbus2us.com/h1b-visa-bills-latest-news-updates-reforms-passed-status-tracker/  
 http://dimplejs.org/advanced_examples_index.html  
 http://christopheviau.com/d3list/   
+http://bl.ocks.org/mgold/6a32cec6380b6ce75c1e
 
 
