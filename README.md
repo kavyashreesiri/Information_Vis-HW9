@@ -43,7 +43,7 @@ These are the attributes that are relevant to my analysis and were obtained afte
      Through the implementation of visualizatioons, I am trying to figure out various parameters that are very important to be able to get H-1B Visa or to be more likely to obtain H-1B Visa.
      There are 5 visulaizations that help the user to underastand the factors that will help in understanding favourable conditions to obtain H-1B visa.
     * Visulaization 1-   
-    __Line Graph:Approved H-1B petition Vs recieved H-1b Petition applications.__  
+    __Line Chart:Approved H-1B petition Vs recieved H-1b Petition applications.__  
       Approvals are the numberof H-1B visa got approved by the Governmant  
       Receipts are the number of H-1B Appplications recived in the duration  
       Analysis:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.  
@@ -52,7 +52,8 @@ These are the attributes that are relevant to my analysis and were obtained afte
     * Visualization 2-  
     __Line Chart:Shows the trend in Approved H-1B applications count based on educational qualifications.__  
     Analysis:Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
-   * Interactive elements you employed:  
+    Applicants with higher educational qualifications have more chances to obtain H1-B.
+* Interactive elements you employed:  
         * Tooltip  
         * Zoom in and Zoom out
         * Highlighting
