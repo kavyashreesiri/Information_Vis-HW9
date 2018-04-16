@@ -75,14 +75,14 @@ These are the attributes that are relevant to my analysis and were obtained afte
       In 2014, the H1-B cap was 65,000.In 2016,it was increased to 110,000 per year.   
       Interactive elements employed:   
       Tooltip, Highlighting,selecting and sorting in asceding order
-    * __Visualization 4_
-    Select range of salary from drop down.
-    Click on state to Zoom-in and Zoom-out.
-    Hover on circle to get details of Job position
-    Red circles give information about Job title with less than 75k and Black bubbles provide information about Job title with salary greater than 75k.
+    * __Visualization 4__  
+    Select range of salary from drop down.  
+    Click on state to Zoom-in and Zoom-out.  
+    Hover on circle to get details of Job position.  
+    Red circles give information about Job title with less than 75k and Black bubbles provide information about Job title with salary greater than 75k.  
     `Analysis:`  
-    More dense area can be seen in the Boston, Southern California, Illinois. All these are entry or basic level positions like House Keeping, Clerk, Assistants etc., 
-    Also the east and mid-eastern part of US have good chances of filing a petition for such entry level jobs.
+    More dense area can be seen in the Boston, Southern California, Illinois. All these are entry or basic level positions like House Keeping, Clerk, Assistants etc.,   
+    Also the east and mid-eastern part of US have good chances of filing a petition for such entry level jobs.  
     Out of all the salary ranges, people with salary range of 65 - 75k are high in number as we can see that color red dominates the black color in the graph below. All these positions are mostly related to positions like Senior Level Programmer, Human Resource Manager, Business Analyst etc.
     * __Visualization 5__  
     __GeoMap shows distribution of Average salary in each state for H-1B Visa Employment__  
