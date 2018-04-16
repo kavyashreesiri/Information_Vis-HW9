@@ -61,7 +61,7 @@ These are the attributes that are relevant to my analysis and were obtained afte
     __Line Chart:Shows the trend in Approved H-1B applications count based on educational qualifications.__  
     Analysis:Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
     Applicants with higher educational qualifications have more chances to obtain H1-B
-    * __Visualization 3__
+    * __Visualization 3__  
       __Sortable Bar chart: It shows the H1-B petitions filed in different states.__   
       Storytelling elements:  
         Checking the Sort values button will sort the bars in ascending order of H1-B petitions alongwith the worksites.  
