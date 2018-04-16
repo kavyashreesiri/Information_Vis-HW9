@@ -76,7 +76,13 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Interactive elements employed:   
       Tooltip, Highlighting,selecting and sorting in asceding order
 
-
+    * __Visualization 6__  
+      __Stacked Bar Graph:Depicts the number of petitions each position is contributing from the total number of petitions.__  
+        Donut Chart: Gives a more detailed overview about the top ten positions in the list of H-1B.  
+        Click on bar of stacked bar graph,hover on each part of bar to know the number of respective positions.  
+        `Analysis:`
+         The number of positions pertaining to that position, from which a user can easily interpret the results and getsome insights.
+         Software developers,system analyst,programmers ,other computer related occupations take up majority of the job positions which more tend to apply for H1-B.
    * Address how the visualization answers the questions you raised in the Introduction  
  
  
