@@ -42,12 +42,13 @@ These are the attributes that are relevant to my analysis and were obtained afte
    * Description:  
      Through the implementation of visualizatioons, I am trying to figure out various parameters that are very important to be able to get H-1B Visa or to be more likely to obtain H-1B Visa.
      There are 5 visulaizations that help the user to underastand the factors that will help in understanding favourable conditions to obtain H-1B visa.
-    * Visulaization 1- 
-      Line Graph:Approved H-1B petition Vs recieved H-1b Petition applications.
-      Approvals are the numberof H-1B visa got approved by the Governmant
-      Receipts are the number of H-1B Appplications recived in the duration
-      Analysis:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.
-      So,now we know that H1-B visa count had been increasing consistently.e can get into further details of factors.  
+    * Visulaization 1-   
+    __Line Graph:Approved H-1B petition Vs recieved H-1b Petition applications.__  
+      Approvals are the numberof H-1B visa got approved by the Governmant  
+      Receipts are the number of H-1B Appplications recived in the duration  
+      Analysis:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.  
+      So,now we know that H1-B visa count had been increasing consistently,we can now get into further details of factors.    
+      Story telling elements: Annotation of trends.
 
    * Interactive elements you employed:  
         * Tooltip  
