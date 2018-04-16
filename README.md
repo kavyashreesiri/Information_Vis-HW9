@@ -75,8 +75,7 @@ These are the attributes that are relevant to my analysis and were obtained afte
       In 2014, the H1-B cap was 65,000.In 2016,it was increased to 110,000 per year.   
       Interactive elements employed:   
       Tooltip, Highlighting,selecting and sorting in asceding order
-    * __Visualization 4__
-     
+    * __Visualization 4_-
     * __Visualization 5__  
     __GeoMap shows distribution of Average salary in each state for H-1B Visa Employment__  
       Click on + or - state to Zoom-in and Zoom-out.  
@@ -93,8 +92,7 @@ These are the attributes that are relevant to my analysis and were obtained afte
          The number of positions pertaining to that position, from which a user can easily interpret the results and getsome insights.
          Software developers,system analyst,programmers ,other computer related occupations take up majority of the job positions which more tend to apply for H1-B.
    * Address how the visualization answers the questions you raised in the Introduction  
- 
- 
+
 4. __Design decisions__
  Choice of visualization type, size, color, scale, and other visual elements, as well as the use of sorting or other data transformations  
  
