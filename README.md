@@ -60,11 +60,18 @@ These are the attributes that are relevant to my analysis and were obtained afte
     * Visualization 2-  
     __Line Chart:Shows the trend in Approved H-1B applications count based on educational qualifications.__  
     Analysis:Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
-    Applicants with higher educational qualifications have more chances to obtain H1-B.
-* Interactive elements you employed:  
-        * Tooltip  
-        * Zoom in and Zoom out
-        * Highlighting
+    Applicants with higher educational qualifications have more chances to obtain H1-B
+    * Visualization 3-
+      Sortable Bar chart: It shows the H1-B petitions filed in different worksites  
+      
+      Storytelling elemnsts:  
+           Checking the Sort values button will sort the bars in ascending order of H1-B petitions alongwith the worksites.  
+           Select the year of interest and sort the bars.  
+      Analysis:Top 5 states remained in the same position with respect count of H1-B petitions filed.  
+      California,Texas,Illions,New Jersy,Massachusetts are the states with highest numbe rof H-1B Visa applications.
+      Interactive elements employed:  
+        Tooltip, Highlighting,selecting and sorting in asceding order
+
 
    * Narrative storytelling elements  
 
