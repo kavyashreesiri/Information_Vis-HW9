@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style type="text/css">
+        /*highlights a state in the map*/
+        path:hover {
+            fill-opacity: .7;
+            stroke: orange;
+            color: orange;
+        }
+        /* applies below styling attributes to the tooltip */
+        createDiv.tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+            height: 40px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: deepskyblue;
+            border: 0px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <center><h3>Map showing Position Job title and Salary distribution</h3></center>
+    <b>Salary&nbsp;&nbsp;&nbsp;</b><select id="salDropdown">
+        <option value="Select" selected="selected">--Select--</option>
+        <option value="10000">Upto 40k</option>
+        <option value="2015">40k to 60k</option>
+        <option value="2014">50k to 54k</option>
+        <option value="2013">54k to 58k</option>
+        <option value="2012">58k to 62k</option>
+        <option value="2011">63k above</option>
+    </select>
+    <script>
+        //defines svg areas with below dimensions
+        var svgWidth = 1400, svgHeight = 800;
+        //Create SVG element and append map to the SVG
+        var createSvgArea = d3.select("body")
+                    .append("svg")
+                    .attr("width", svgWidth)
+                    .attr("height", svgHeight)
+                    .append("g");
+        //div element append to body
+        var createDiv = d3.select("body")
+                    .append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0);
+        //this projects a map to the screen using albersUSa
+        var projectUSMap = d3.geo.albersUsa().translate([svgWidth / 2, svgHeight / 2]).scale([1450]);
+        // Define path generator
+        var path = d3.geo.path().projection(projectUSMap);
+        //us-states taken from geo map reference
+        d3.json("us-states.json", function (geoJsonUS) {
+            createSvgArea.selectAll("path")
+            .data(geoJsonUS.features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .style("stroke", "#fff")
+            .style("stroke-width", "1")
+            //fill below color to map
+                .style("fill", function (d) {
+                    var salValue = d.properties.visited;
+                    if (salValue) {
+                        return color(salValue);
+                    }
+                    else {
+                        //returns cement color
+                        return "rgb(213,222,217)";
+                    }
+                })
+                .on("click", clickMap);
+            /* this query retrieves the data from database and inputs to the geomap
+             SELECT Job_Title, Prevailing_Wage, lon, lat
+             FROM H1b_kaggle
+             WHERE YEAR=2016 and lon<>'NA' and lat<>'NA' and Prevailing_Wage<>0
+             ORDER BY Prevailing_Wage;
+             */
+            //remove all the selected parts
+            var removeSelection = d3.select(null);
+            //inputs external data from MS Access
+            d3.csv("large.csv", function (data) {
+                data.forEach(function (d) {
+                    d.salValue = +d.salValue;
+                });
+                //linked with dropdown
+                d3.select('#salDropdown').on("change", function () {
+                    var sect = document.getElementById("salDropdown");
+                    var section = sect.options[sect.selectedIndex].salValue;
+                    //obtain salary thru this function
+                    salaryData = obtainSal(data, 'salary', section);
+                    salaryData.forEach(function (d) {
+                        d.removeSelection = true;
+                    });
+                    updateGraph(salaryData);
+                });
+            });
+            //this function is called to update the graph on selection
+            function updateGraph(salaryData) {
+                //remove all the updates-circles
+                createSvgArea.selectAll("circle").remove();
+                //append bubble to svg area
+                createSvgArea.selectAll("circle")
+                .attr("class", "dot")
+                .attr("transform", maptransform)
+                .data(salaryData)
+                .enter()
+                .append("circle")
+                .attr("transform", function (d) {
+                    //	console.log(c++);
+                    //	console.log(d.lon);
+                    return "translate(" + projectUSMap([
+                            d.lon,
+                            d.lat
+                    ]) + ")";
+                })
+                .attr("r", function (d) {
+                    return "2px";
+                })
+                .style("fill", function (d) {
+                    if (d.salary < 75000) { return "red"; }
+                    else { return "black"; }
+                })
+                .style("opacity", 56)
+                    //mouse over triggers inner function
+                .on("mouseover", function (d) {
+                    createDiv.transition()
+                           .duration(200)
+                           .style("opacity", .9);
+                    createDiv.text(d.place)
+                           .style("left", (d3.event.pageX) + "px")
+                          .style("top", (d3.event.pageY - 28) + "px");
+                })
+                // on mouse out remove tooltip
+                .on("mouseout", function (d) {
+                    createDiv.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+                });
+            }
+            //this function takes gejson and salary as input
+            function obtainSal(geoJsonUS, sal, salValue) {
+                //divide salary range into below if conditions
+                if (salValue == 10000) {
+                    var result = [];
+                    geoJsonUS.forEach(function (val, idx, arr) {
+                        if (val[sal] <= 40000) {
+                            result.push(val)
+                        }
+                    })
+                    return result;
+                }
+                else if (salValue == 2015) {
+                    var result = [];
+                    geoJsonUS.forEach(function (val, idx, arr) {
+                        if (val[sal] >= 40000 && val[sal] <= 50000) {
+                            result.push(val)
+                        }
+                    })
+                    return result;
+                }
+                else if (salValue == 2014) {
+                    var result = [];
+                    geoJsonUS.forEach(function (val, idx, arr) {
+                        if (val[sal] > 50000 && val[sal] <= 53500) {
+                            result.push(val)
+                        }
+                    })
+                    return result;
+                }
+                else if (salValue == 2013) {
+                    var result = [];
+                    geoJsonUS.forEach(function (val, idx, arr) {
+                        if (val[sal] > 53500 && val[sal] <= 57800) {
+                            result.push(val)
+                        }
+                    })
+                    return result;
+                }
+                else if (salValue == 2012) {
+                    var result = [];
+                    geoJsonUS.forEach(function (val, idx, arr) {
+                        if (val[sal] > 57800 && val[sal] < 62000) {
+                            result.push(val)
+                        }
+                    })
+                    return result;
+                }
+                else {
+                    var result = [];
+                    geoJsonUS.forEach(function (val, idx, arr) {
+                        if (val[sal] > 63000) {
+                            result.push(val)
+                        }
+                    })
+                    return result;
+                }
+            }
+            //transform map based on new data
+            function maptransform(d) {
+                return "translate(" + x(d.xlog) + "," + y(d.ylog) + ")"
+            };
+            //reset all the transitions and selection with one fn call
+            function reset() {
+                //remove selection
+                removeSelection.classed("removeSelection", false);
+                //null the selection
+                removeSelection = d3.select(null);
+                createSvgArea.transition()
+                    .duration(750)
+                    .style("stroke-width", "1.5px")
+                    .attr("transform", "");
+            }
+            //on clicking a map zoom in or out
+            function clickMap(d) {
+                //zoom in functionality reset
+                if (removeSelection.node() === this)
+                    return reset();
+                //falsify selections
+                removeSelection.classed("removeSelection", false);
+                //allow map to update
+                removeSelection = d3.select(this).classed("removeSelection", true);
+                //scale map as per data
+                var positionCoord = path.bounds(d),
+                    //x position set
+                    dx = positionCoord[1][0] - positionCoord[0][0],
+                    //set y position
+                    dy = positionCoord[1][1] - positionCoord[0][1],
+                    //set back to position
+                    x = (positionCoord[0][0] + positionCoord[1][0]) / 2,
+                    y = (positionCoord[0][1] + positionCoord[1][1]) / 2;
+                //rescaling
+                var reScaleMap = .9 / Math.max(dx / svgWidth, dy / svgHeight),
+                    //positioning back
+                    repositionMap = [svgWidth / 2 - reScaleMap * x, svgHeight / 2 - reScaleMap * y];
+                //transition to move in n out or rescale
+                createSvgArea.transition()
+                  .duration(630)
+                  .style("stroke-width", 1.5 / reScaleMap + "px")
+                  .attr("transform", "translate(" + repositionMap + ")scale(" + reScaleMap + ")");
+            }
+        });
+        //});
+    </script>
+</body>
+<div>
+    <h4>Geo Map Visualization</h4>
+    <p>Select range of salary from drop down.</p>
+    <p>Click on state to Zoom-in and  Zoom-out.</p>
+    <p>Hover on circle to get details of Job position</p>
+    <h5>Red bubbles give information about Job title with less than 75k and Black bubbles provide information about Job title with salary greater than 75k.</h5>
+    <p>Analysis:</p>
+    <p>More dense area can be seen in the Boston, Southern California, Illinois. All these are entry or basic level positions like House Keeping, Clerk, Assistants etc., Also the east and mid-eastern part of US have good chances of ling a petition
+for such entry level jobs.</p>
+    <p>Out of all the salary ranges, people with salary range of 65 - 75k are high in number as we can see that color red dominates the black color in the graph below. All these positions are mostly related to positions like Senior Level Programmer, Human Resource Manager, Business Analyst etc.</p>
+</div>
+</html>
