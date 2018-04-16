@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: absolute;
+        width: 831px;
+    }
+
+    .axis text {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .bar {
+        fill: steelblue;
+        fill-opacity: .9;
+    }
+
+    .x.axis path {
+        display: none;
+    }
+
+    label {
+        position: relative;
+        top: 10px;
+        right: 10px;
+    }
+
+    rect:hover {
+        fill: yellow;
+    }
+
+    rect {
+        -moz-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    #tooltip {
+        position: absolute;
+        width: 200px;
+        height: auto;
+        padding: 10px;
+        background-color: #aec;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+    }
+
+        #tooltip.hidden {
+            display: none;
+        }
+
+        #tooltip p {
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 15px;
+            line-height: 20px;
+        }
+</style>
+<body>
+<label><input id='sort' type="checkbox" align='right'> Sort values</label>
+<div id="tooltip" class="hidden">
+    <p><strong id="worksite">Worksite </strong></p>
+    <p><span id="h1bcount">100</span></p>
+</div>
+
+<div id="types">
+
+    <form action="">
+        <p>Years</p>
+        <input id="radio1" type="radio" name="group" value="2014" />2014<br>
+        <input id="radio2" type="radio" name="group" value="2015" />2015<br>
+        <input id="radio3" type="radio" name="group" value="2016" />2016<br>
+    </form>
+</div>
+
+<div id="tooltip" class="hidden">
+    <p><strong>H1-B count by worksite</strong></p>
+    <p><span id="value">100</span>H1-B count</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script>
+
+    var Unit;//string for the units in toolptips
+    var Label;
+    var Dataset;
+    var InputFileName;
+    var margin = { top: 30, right: 20, bottom: 180, left: 100 },
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+    var format = d3.format(".0");
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], 0.1, 1);
+    var y = d3.scale.linear()
+        .range([height, 0]);
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickFormat(format);
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    //Default Values
+    Unit = ' count ';
+    Label = 'H1-B count: ';
+    InputFileName = "2014_Worksite.csv";
+
+
+    if (document.getElementById('radio1').checked) {
+        Unit = ' count';
+        Label = 'H1-B count: ';
+        InputFileName = '2014_Worksite.csv';
+    }
+    if (document.getElementById('radio2').checked) {
+        Unit = ' count';
+        Label = 'H1-B count: ';
+        InputFileName = '2015_Worksite.csv';
+    }
+    if (document.getElementById('radio3').checked) {
+        Label = 'H1-B count: ';
+        Unit = ' count:';
+        InputFileName = '2016_Worksite.csv';
+    }
+
+    document.getElementById('radio1').checked = true;
+
+    d3.csv(InputFileName, function (error, data) {
+        data.forEach(function (d) {
+            d.h1bcount = +d.h1bcount;
+        });
+        Dataset = data;
+        x.domain(data.map(function (d) { return d.worksite; }));
+        //here
+        y.domain([0, d3.max(data, function (d) { return d.h1bcount; })]);
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .selectAll("text")
+                  .style("text-anchor", "end")
+                  .attr("dx", "-.5em")
+                  .attr("dy", "-.9em")
+                  .attr("transform", function (d) {
+                      return "rotate(-90)"
+                  });
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.7668em")
+            .style("text-anchor", "end")
+            .text("Value");
+
+        svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function (d) { return x(d.worksite); })
+            .attr("width", x.rangeBand())
+            //here
+            .attr("y", function (d) { return y(d.h1bcount); })
+            //here
+            .attr("height", function (d) { return height - y(d.h1bcount); })
+            .on("mouseover", function (d) {
+
+                //Get this bar's x/y values, then augment for the tooltip
+                var xPosition = parseFloat(d3.select(this).attr("x"));
+                var yPosition = parseFloat(d3.select(this).attr("y"));
+                //var pop=parserFloat(d3.select(this).attr(""))
+                //Update the tooltip position and value
+                d3.select("#tooltip")
+                    .style("left", xPosition + "px")
+                    .style("top", yPosition + "px")
+                    .select("#h1bcount")
+                    .text(Label + d.h1bcount + Unit);
+
+                d3.select("#tooltip")
+                    .style("left", xPosition + "px")
+                    .style("top", yPosition + "px")
+                    .select("#worksite")
+                    .text("Worksite: " + d.worksite)
+
+
+                //Show the tooltip
+                d3.select("#tooltip").classed("hidden", false);
+
+            })
+                     .on("mouseout", function () {
+
+                         //Hide the tooltip
+                         d3.select("#tooltip").classed("hidden", true);
+
+
+                     })
+        d3.selectAll("input").on("change", change);
+        d3.select("#sort").on("change", sort);
+
+        var sortTimeout = setTimeout(function () {
+            d3.select("#sort").property("checked", true).each(change);
+        }, 300);
+
+        //Action when radiobutton status is changed
+        function change() {
+            //update status and filename
+            document.getElementById('sort').checked = false;
+            if (document.getElementById('radio1').checked) {
+                Unit = '';
+                Label = 'H1-B count: ';
+                InputFileName = '2014_Worksite.csv';
+            }
+            if (document.getElementById('radio2').checked) {
+                Unit = '';
+                Label = 'H1-B count:';
+                InputFileName = '2015_Worksite.csv';
+            }
+            if (document.getElementById('radio3').checked) {
+                Label = 'H1-B count: ';
+                Unit = '';
+                InputFileName = '2016_Worksite.csv';
+            }
+
+            //change dataset
+            d3.selectAll("svg").remove();
+            svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            d3.csv(InputFileName, function (error, data) {
+                data.forEach(function (d) {
+                    d.h1bcount = +d.h1bcount;
+                });
+
+                Dataset = data;
+                x.domain(data.map(function (d) { return d.worksite; }));
+                y.domain([0, d3.max(data, function (d) { return d.h1bcount; })]);
+                svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.5em")
+                .attr("dy", "-.9em")
+                .attr("transform", function (d) {
+                    return "rotate(-90)"
+                });
+
+                svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("H1-B count");
+
+                svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function (d) { return x(d.worksite); })
+                .attr("width", x.rangeBand())
+                .attr("y", function (d) { return y(d.h1bcount); })
+                 //here
+                .attr("height", function (d) { return height - y(d.h1bcount); })
+                .on("mouseover", function (d) {
+
+
+                    var xPosition = parseFloat(d3.select(this).attr("x"));
+                    var yPosition = parseFloat(d3.select(this).attr("y"));
+
+                    d3.select("#tooltip")
+						.style("left", xPosition + "px")
+						.style("top", yPosition + "px")
+						.select("#h1bcount")
+						.text(Label + d.h1bcount + Unit);
+
+                    d3.select("#tooltip")
+						.style("left", xPosition + "px")
+						.style("top", yPosition + "px")
+						.select("#worksite")
+						.text("Worksite: " + d.worksite)
+
+                    //Show the tooltip
+                    d3.select("#tooltip").classed("hidden", false);
+
+                })
+                .on("mouseout", function () {
+
+                    //Hide the tooltip
+                    d3.select("#tooltip").classed("hidden", true);
+
+
+                })
+
+            });
+
+        };
+
+        //SORTING
+        function sort() {
+            data = Dataset;
+            var x0 = x.domain(data.sort(this.checked
+                ? function (a, b) { return b.h1bcount - a.h1bcount; }
+                : function (a, b) { return d3.ascending(a.worksite, b.worksite); })
+                .map(function (d) { return d.worksite; }))
+              .copy();
+            svg.selectAll(".bar")
+            .sort(function (a, b) { return x0(a.worksite) - x0(b.worksite); });
+            var transition = svg.transition().duration(750),
+              delay = function (d, i) { return i * 50; };
+            transition.selectAll(".bar")
+            .delay(delay)
+            .attr("x", function (d) { return x0(d.worksite); });
+            transition.select(".x.axis")
+            .call(xAxis)
+            .selectAll("g")
+            .delay(delay)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.5em")
+            .attr("dy", "-.9em")
+            .attr("transform", function (d) {
+                return "rotate(-90)"
+            });
+
+        };
+        
+
+
+
+    });
+    $("g").insertAfter($(".container"));
+    $(document).ready(function () {
+        $("body").append('<p>I\'m a paragraph!</p>');
+    });
+
+</script>
+<div class="container">
+    <h4>Sortable Bar chart: It shows the H1-B petitions filed in different worksites </h4>
+    <p>Checking the Sort values button will sort the bars in ascending order of H1-B petitions alongwith the worksites</p>
+    <p>Select the year of interest and sort the bars</p>
+    <p>Analysis:Top 5 states remained in the same position with respect count of H1-B petitions filed</p>
+</div>
+
+</body> 
+</html>
