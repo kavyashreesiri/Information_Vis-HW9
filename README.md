@@ -46,18 +46,18 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Type: Quantitative Data 
     * LON: longitude location co-ordinate of the Worksite.    
       Type: Quantitative Data   
-3. __Visualization__
+3. __Visualizations__
    * Description:  
      Through the implementation of visualizatioons, I am trying to figure out various parameters that are very important to be able to get H-1B Visa or to be more likely to obtain H-1B Visa.
      There are 5 visulaizations that help the user to underastand the factors that will help in understanding favourable conditions to obtain H-1B visa.
-    * Visulaization 1-   
+    * __Visulaization 1-__
     __Line Chart:Approved H-1B petition Vs recieved H-1b Petition applications.__  
       Approvals are the numberof H-1B visa got approved by the Governmant  
       Receipts are the number of H-1B Appplications recived in the duration  
       Analysis:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.  
       So,now we know that H1-B visa count had been increasing consistently,we can now get into further details of factors.    
       Story telling elements: Annotation of trends.
-    * Visualization 2-  
+    * __Visualization 2__-  
     __Line Chart:Shows the trend in Approved H-1B applications count based on educational qualifications.__  
     Analysis:Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
     Applicants with higher educational qualifications have more chances to obtain H1-B
@@ -65,8 +65,8 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Sortable Bar chart: It shows the H1-B petitions filed in different worksites   
       Storytelling elements:  
         Checking the Sort values button will sort the bars in ascending order of H1-B petitions alongwith the worksites.  
-        Select the year of interest and sort the bars.  
-      Analysis:Top 5 states remained in the same position with respect count of H1-B petitions filed.  
+        Select the year of interest and sort the bars.   
+      Analysis:Top 5 states remained in the same position with respect count of H1-B petitions filed.   
       California,Texas,Illions,New Jersy,Massachusetts are the states with highest numbe rof H-1B Visa applications.  
       Interactive elements employed:  
       Tooltip, Highlighting,selecting and sorting in asceding order
