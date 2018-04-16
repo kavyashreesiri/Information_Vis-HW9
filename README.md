@@ -54,14 +54,15 @@ These are the attributes that are relevant to my analysis and were obtained afte
     __Line Chart:Approved H-1B petition Vs recieved H-1b Petition applications.__  
       Approvals are the numberof H-1B visa got approved by the Governmant  
       Receipts are the number of H-1B Appplications recived in the duration  
-      `Analysis:`  
+      `Analysis:`   
        In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.  
       So,now we know that H1-B visa count had been increasing consistently,we can now get into further details of factors.    
       Story telling elements:  
          Annotation of trends.
     * __Visualization 2__  
     __Line Chart:Shows the trend in Approved H-1B applications count based on educational qualifications.__  
-    `Analysis:`Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
+    `Analysis:`  
+    Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
     Applicants with higher educational qualifications have more chances to obtain H1-B
     * __Visualization 3__  
       __Sortable Bar chart: It shows the H1-B petitions filed in different states.__   
