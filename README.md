@@ -49,7 +49,9 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Analysis:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.  
       So,now we know that H1-B visa count had been increasing consistently,we can now get into further details of factors.    
       Story telling elements: Annotation of trends.
-
+    * Visualization 2-  
+    __Line Chart:Shows the trend in Approved H-1B applications count based on educational qualifications.__  
+    Analysis:Increase in Master's degree after 2016 is because of the Employment eligibility rule, whihc has reservation of 20,000 for those who studied in Master's or bachelor's in US.
    * Interactive elements you employed:  
         * Tooltip  
         * Zoom in and Zoom out
