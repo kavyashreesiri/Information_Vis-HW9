@@ -2,11 +2,15 @@
 The H-1B is an employment-based, non-immigrant visa category for temporary foreign workers in the United States.    For a foreign national to apply for H1-B visa, an US employer must offer a job and petition for H-1B visa with the US immigration department. This is the most common visa status applied for and held by international students once they complete college/ higher education (Masters, PhD) and work in a full-time position.   
   * Motivation   
     The main motivation behind considering this dataset is the fact that most of the strength are international students and I wanted to let them know what are the statistics of H-1B visas for a particular Industry and particular job type. Following the Recent Presidential Elections, there has been a lot of chaos in the United States about the H1-B visas and skilled immigrants, this was also a contributing factor in making us think about this dataset.   
+  * Questions
+    My goal was to understand favourable conditions to obtain a H-1B Visa employment.
+    So, I have aggregated few other data sets that helped me understand the growth in H-1B visa petitions,Salary range with respect to state,education qulaification,Job positions,States with more number of H1-B visa.  
 2. __Data__  
   * *Dataset Source*   
         The Office of Foreign Labor Certification (OFLC) generates program data that is useful information about the immigration programs including the H1-B visa. The disclosure data updated annually is available at https://www.foreignlaborcert.doleta.gov/performancedata.cfm   
   * *Additional dataset*   
-        This data set provides information about the hiring practices of employers who petition for foreign national workersand it is made available by U.S Citizenship and Immigratio services Department.It has data from 2007-2017 which I have used to understand the growth in Recieved and Approved H-1B Petition Flings over years.  Data is available at : https://www.uscis.gov/tools/reports-studies/immigration-forms-data
+        This data set provides information about the hiring practices of employers who petition for foreign national workersand it is made available by U.S Citizenship and Immigratio services Department.It has data from 2007-2017 which I have used to understand the growth in Recieved and Approved H-1B Petition Flings over years.  Data is available at : https://www.uscis.gov/tools/reports-studies/immigration-forms-data  
+        One more data set considered i stheh Population in each state of United States.
 * __Data Attributes__   
 These are the attributes that are relevant to my analysis and were obtained after processing the original dataset.  
     * Case Status: This Describes the Details about status of an applicant after LCA processing, whether he/she is eligible for applying to H-1B.  
@@ -36,6 +40,8 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Type: Quantitative Data   
 3. __Visualization__
    * Description:  
+     Through the implementation of visualizatioons, I am trying to figure out various parameters that are very important to be able to get H-1B Visa or to be more likely to obtain H-1B Visa.
+     There are 5 visulaizations that help the user to underastand the factors that will help in understanding favourable conditions to obtain H-1B visa.
 
 
    * Interactive elements you employed:  
