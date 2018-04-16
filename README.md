@@ -2,7 +2,7 @@
 The H-1B is an employment-based, non-immigrant visa category for temporary foreign workers in the United States.    For a foreign national to apply for H1-B visa, an US employer must offer a job and petition for H-1B visa with the US immigration department. This is the most common visa status applied for and held by international students once they complete college/ higher education (Masters, PhD) and work in a full-time position.   
   * Motivation   
     The main motivation behind considering this dataset is the fact that most of the strength are international students and I wanted to let them know what are the statistics of H-1B visas for a particular Industry and particular job type. Following the Recent Presidential Elections, there has been a lot of chaos in the United States about the H1-B visas and skilled immigrants, this was also a contributing factor in making us think about this dataset.   
-  * Questions
+  * Questions  
     My goal was to understand favourable conditions to obtain a H-1B Visa employment.
     So, I have aggregated few other data sets that helped me understand the growth in H-1B visa petitions,Salary range with respect to state,education qulaification,Job positions,States with more number of H1-B visa.  
 2. __Data__  
