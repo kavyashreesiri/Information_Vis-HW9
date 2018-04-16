@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stackbar</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<style type="text/css">
+    .stackdonuttooltip {
+              position: absolute;
+              text-align: center;
+              width: 70px;
+              height: 15px;
+              padding: 8px;
+              margin-top: -20px;
+              font: 15px sans-serif;
+              background: rgba(255,255,255,0.5);
+              font-weight: bold;
+              pointer-events: none;
+              z-index: 1;
+            }
+</style>
+</head>
+<body>
+
+<script>
+    //first step is to create an svg area for the bar graph to appear
+
+    //declares size for each label along axes
+    var labelAreaforY=40,labelAreaforX=50;
+    var topBorderArea=10,rightBorderArea=150;
+    //below variables
+    var svgAreaWidth=500-labelAreaforY-rightBorderArea,svgAreaHeight=600-labelAreaforX-topBorderArea;
+    //colors
+    var colorForStack=d3.scaleOrdinal(d3.schemeCategory20c);
+
+    //this selects body
+    var createbodySVG =d3.select("body");
+    //appends svg element to body element
+    var createSVG = createbodySVG.append("svg").attr("height",svgAreaHeight+topBorderArea+labelAreaforX)
+                    .attr("width",svgAreaWidth+labelAreaforY+rightBorderArea);
+
+    //svg areas for donut
+    var svgAreaWidth1=700,svgAreaHeight1=500;
+    //this selects body
+    var createbodySVG1 =d3.select("body");
+    //appends svg element to body element
+    var createSVG1 = createbodySVG.append("svg").attr("height",svgAreaHeight1).attr("width",svgAreaWidth1);
+    var addgtoSVG1=createSVG1.append("g").attr("transform", "translate("+svgAreaWidth1/2+","+svgAreaHeight1/2+")");
+    //creates an arc or concentric circles with given radii
+    var createArc=d3.arc().innerRadius(200).outerRadius(150);
+
+    //X axis scaling based on the years
+    var scaleXaxis= d3.scaleBand().rangeRound([0, svgAreaWidth]).paddingInner(0.05).align(0.1);
+    //creates a div for tooltip and appends this to body
+    var div = d3.select("body").append("div")
+    .attr("class", "stackdonuttooltip")
+    .style("display", "none");
+    //y axis scaling to fit all the count values
+    var scaleYaxis= d3.scaleLinear().rangeRound([svgAreaHeight, 0]);
+    //d3.csv() reads data from external csv file and inputs data to the graph
+   
+    //this takes input from the above query
+    d3.csv("StackSocNameAllYears.csv",function(d, i, extractData) {
+        for (i = 1, t = 0; i < extractData.length; ++i)
+            t += d[extractData[i]] = +d[extractData[i]];
+            d.stackTotal = t;
+            return d;
+    },//if success in reading data enter this model
+        function(error, data) {
+            if(error)
+                throw error;
+        //extract years through slicing data
+        var soc_nameType=data.columns.slice(1);
+        //console.log(soc_nameType);
+        console.log(d3.stack().keys(soc_nameType)(data));
+          //apply scaling to both the axes
+            scaleXaxis.domain(data.map(function(d) { return d.Year; }));
+            scaleYaxis.domain([0, d3.max(data, function(d) { return d.stackTotal; })]).nice();
+        //obtain all the soc name and apply color for each bar
+            colorForStack.domain(soc_nameType);
+        //appends rectangles to the svg area created at first step
+        var createRectforStack=createSVG.append("g").attr("transform", "translate(" + labelAreaforX + "," + labelAreaforY + ")")
+            .selectAll("g")
+            .data(d3.stack().keys(soc_nameType)(data))
+            .enter().append("g").attr("fill",function (d) {
+                return colorForStack(d.key);
+            })
+            //assign color
+            .attr("class", function(d) {  
+              return "color-" + colorForStack(d.key).substring(1);
+            })
+            //colors to all the bars in each stack
+            .selectAll("rect").data(function (d) {
+                return d;
+            }).enter()
+            .append("rect")
+            .attr("x",function (d) {
+                console.log("year:"+d.data.Year);
+                return scaleXaxis(d.data.Year);
+            })
+            .attr("y", function(d) {
+                //console.log("year2:"+d[1]);
+                return scaleYaxis(d[1]);
+            })
+            .attr("width", scaleXaxis.bandwidth())  //width of each rectangle
+            .attr("height",function (d) {
+                //this conrtibutes to height of the rectangle
+                return scaleYaxis(d[0]) - scaleYaxis(d[1]);
+            })
+            //on clicking a bar this fn is called
+            .on("click",function(d){
+                changeValue(d.data.Year);
+            })
+            //on mouse over, function to be triggered
+            .on("mouseover", function(d) {
+                stackTooltip.style("display", null);
+                stackTooltip.select("text").html(d.value);
+            })
+            //on mouse out internal fn to be trigerred
+            .on("mouseout", function() { stackTooltip.style("display", "none"); })
+            //mouse move fn to be trigered
+            .on("mousemove", function(d) {
+                var xPosition = d3.mouse(this)[0] ;
+                var yPosition = d3.mouse(this)[1] ;
+                stackTooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                stackTooltip.select("text").text(d[1]);});
+            //g element for X axis
+            createSVG.append("g")
+                //.attr("class", "axis")
+                .attr("transform", "translate(" + labelAreaforX + "," + (svgAreaHeight+labelAreaforY) + ")")
+                //.attr("transform", "translate(10,"+svgAreaHeight + ")")
+                .call(d3.axisBottom(scaleXaxis));
+            //appends y axis
+            createSVG.append("g").attr("transform", "translate(" + labelAreaforX + "," + labelAreaforY + ")")
+                //.attr("class", "axis")
+                .call(d3.axisLeft(scaleYaxis).ticks(null, "s"))
+                .append("text")
+                .attr("x", 2)
+                .attr("y", scaleYaxis(scaleYaxis.ticks().pop()) + 0.5)
+                .attr("dy", "0.32em")
+                .attr("fill", "#000")
+                //.attr("font-weight", "bold")
+                .attr("text-anchor", "start")
+                .text("Count");
+            //to append all labels to a legend in reverse order
+            var a=soc_nameType.slice().reverse();
+            //store detials in an array
+            var array = $.map(a, function(value, index) {
+                return [value];
+            });
+
+            console.log(colorForStack("PHYSICAL_THERAPISTS"));
+            //colors in the stack
+            var classes = [".color-3182bd",".color-6baed6",".color-9ecae1",".color-c6dbef",".color-e6550d",
+                ".color-fd8d3c",".color-fdae6b",".color-fdd0a2","color-009900",".color-31a354",
+                ".color-74c476",".color-a1d99b",".color-c7e9c0"];
+            console.log(array);    
+            console.log("soc name"+soc_nameType.slice().reverse());
+            //legend for stack
+            var stackLegend = createSVG.append("g")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 10)
+                //text to be at the end
+                .attr("text-anchor", "end")
+                .selectAll("g")
+                .data(array)
+                .enter().append("g")
+                .attr("transform", function(d, i) { return "translate(150," + i * 20 + ")"; });
+
+            //append rectangles to each legend title
+            stackLegend.append("rect")
+                .attr("x", svgAreaWidth+32)
+                .attr("width", 12)
+                .attr("height", 12)
+                .attr("fill", colorForStack);
+
+            // append text to each rectangle
+            stackLegend.append("text")
+                .attr("x", 340)
+                .attr("y", 9)
+                .attr("dy", "0.25em")
+                .text(function(d) { return d; })
+                //on mouse over dehighlight other bars than selected
+                .on("mouseover", function(d) {
+                        //console.log("hour bordered color-"+colorForStack(d).substring(1));
+                    //highlight specific color
+                    createSVG.selectAll("g.color-" + colorForStack(d).substring(1)).style("stroke", "black")
+                          .style('stroke-width', '0.3px').style('z-index', -10);
+                      var B = [".color-" + colorForStack(d).substring(1)]
+                      diff = classes.filter(x => B.indexOf(x) < 0 );
+                      createSVG.selectAll(diff.join()).style('opacity', 0.3);
+
+                })
+                //removing mouse should reset a bar
+            .on("mouseout", function(d) {
+                createSVG.selectAll(diff.join()).style('opacity', 1);
+              createSVG.selectAll("g.color-" + colorForStack(d).substring(1)).style("stroke", "none").style("z-index",10);
+            });
+
+            // this creates a tooltip
+            var stackTooltip = createSVG.append("g")
+                .attr("class", "stackTooltip")
+                .style("display", "none");
+            //on hover tooltip--create rectangle box to display
+            stackTooltip.append("rect")
+                .attr("width", 30)
+                .attr("height", 20)
+                .attr("fill", "white")
+                .style("opacity", 0.5);
+            //append text to box and display
+            stackTooltip.append("text")
+                .attr("x", 15)
+                .attr("dy", "1.2em")
+                .style("text-anchor", "middle")
+                .attr("font-size", "12px")
+                .attr("font-weight", "bold");
+
+            //send new values to create donut chart
+            function changeValue(keyValue){
+                console.log(data);
+                data.forEach(function(d){if(d.Year == keyValue){
+                    //call donut fn which draws a dynamic donut
+                    draw_donut(d, createArc);
+                }})
+            }
+            //coverts stack to donut
+            function draw_donut(bartodonut, createArc){
+                //removes all the selections
+                addgtoSVG1.selectAll("*").remove();
+
+                console.log("Donut"+bartodonut.disease);
+                //creates an array to store all the bar data
+                var donutData=[];
+                //loop through each stack and obatain data for donut
+                for(i=0;i<12;i++){
+                    //console.log("test:"+test[0]);
+                    donutData[0]=bartodonut.SOFTWAREDEVELOPERS_APPLICATIONS;
+                    donutData[1]=bartodonut.COMPUTER_SYSTEMS_ANALYST;
+                    donutData[2]=bartodonut.COMPUTER_PROGRAMMERS;
+                    donutData[3]=bartodonut.COMPUTER_OCCUPATIONS_ALL_OTHER;
+                    donutData[4]=bartodonut.SOFTWARE_DEVELOPERS_SYSTEMSSOFTWARE;
+                    donutData[5]=bartodonut.MANAGEMENT_ANALYSTS;
+                    donutData[6]=bartodonut.MATERIALS_SCIENTISTS;
+                    donutData[7]=bartodonut.FINANCIAL_ANALYSTS;
+                    donutData[8]=bartodonut.WEB_DEVELOPERS;
+                    donutData[9]=bartodonut.OPERATIONS_RESEARCH_ANALYSTS;
+                    donutData[10]=bartodonut.ACCOUNTANTS_AND_AUDITORS;
+                    donutData[11]=bartodonut.PHYSICAL_THERAPISTS;
+                    //console.log("test:"+test);
+                }
+
+                //creates a pie layout
+                var createPieforArc=d3.pie().value(function (d) {
+                   // console.log("arc:"+test[0]);
+                    console.log("d :"+d);
+                    return (d);
+                })
+                    .padAngle(.010);
+                //apply color range to stack
+                var colorForStack=d3.scaleOrdinal(d3.schemeCategory20c);
+         function mousemove(val,i) {
+                console.log(val)
+                div.text(val)
+                .style("left", (d3.event.pageX - 34) + "px")
+                .style("top", (d3.event.pageY - 12) + "px");
+               //console.log("color-"+colorForStack(i).substring(1));
+                  addgtoSVG1.selectAll("g.color-" + colorForStack(i).substring(1)).style("stroke", "black")
+                      .style('stroke-width', '0.3px').style('z-index', -10);
+                  var B = [".color-" + colorForStack(i).substring(1)]
+                  diff = classes.filter(x => B.indexOf(x) < 0 );
+                  addgtoSVG1.selectAll(diff.join()).style('opacity', 0.3);
+
+        }
+            //append an arc to each part of the donut..
+                var pathSVG=addgtoSVG1.selectAll("arc").data(createPieforArc(donutData))
+                    //append a g element to group
+                    .enter().append("g").append("path").attr("d", createArc).attr("class",function(d,i){
+                        return "color-"+colorForStack(i).substring(1);} )
+                    .attr("fill",function(d, i) { return colorForStack(i); });
+                //mouse over for donut
+                pathSVG.on("mouseover", function(d) {
+                div.style("display", "inline");
+                div.style("z-index",10)
+                div.select("text").html(d.value);
+                })
+                    //mouse out fn for donut
+                .on("mouseout", function(d,i) { div.style("display", "none");
+                   addgtoSVG1.selectAll(diff.join()).style('opacity', 1);
+              addgtoSVG1.selectAll("g.color-" + colorForStack(i).substring(1)).style("stroke", "none").style("z-index",10);
+               })
+                    //on mouse move fn for donut
+                .on("mousemove", function(d,i) {
+                    //console.log(d.value)
+                    mousemove(d.value,i);
+                });
+                addgtoSVG1.append("text")
+                    .attr("dy", ".35em")
+                    .style("text-anchor", "middle")
+                    .text(function(d) { return "Share"; });
+
+            }
+
+
+    });
+</script>
+    <div>
+        <h4>Stacked Bar Graph:Depicts the number of petitions each position is contributing from the total number ofpetitions.</h4>
+        <h4>Donut Chart: Gives a more detailed overview about the top ten positions in the list of H-1B</h4>
+        <p>Click on bar of stacked bar graph,hover on each part of bar to know the value.</p>
+        <p>Analysis:</p>
+        <p>The number of positions pertaining to that position, from which a user can easily interpret the results and getsome insights.</p>
+        <p>Software developers,system analyst,programmersother computer related occupations take up majority of the job positions which more tend to apply for H1-B.</p>
+    </div>
+</body>
+</html>
