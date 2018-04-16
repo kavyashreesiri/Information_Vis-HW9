@@ -76,6 +76,7 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Interactive elements employed:   
       Tooltip, Highlighting,selecting and sorting in asceding order
     * __Visualization 4__  
+    __Geo Map showing Position of Job title and Salary distribution__
     Select range of salary from drop down.  
     Click on state to Zoom-in and Zoom-out.  
     Hover on circle to get details of Job position.  
