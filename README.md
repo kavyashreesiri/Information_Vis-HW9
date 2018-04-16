@@ -113,14 +113,18 @@ These are the attributes that are relevant to my analysis and were obtained afte
     Finally,Choosing an effective visualization is very important to convey the meaning of data effectively.Within the given time frame, I was able to do 6 visualizations though it was not necessary to have many charts.But,my goal was to convey the favourable conditions to obtain the H1-B Visa.    
     I want to continue working on this project and build a tool whihc can give a probablistic prediction of how likely is the user with various factors has chance to get H1-B Visa.  
 5. __Development Process__  
-  * The development process   
+    
     The whole process of implenting and learning was exciting and interesting.Went through few tutorilas to get basics strong.Especially the GeoJSON map of United States and binding data to Map took a lot of time.Understanding the difference betwen TopoJSON,GeoJSON,Leaflet and how they work consumed a lot of time.   
     I had a huge CSV file which has more than 2.5 million records and GeoJSON which togetehr take a lot of time to load.It was difficult to implement changes and check.
     I have spent 8-9 hours all the three weeks to learn about different interactive tools and techniques.
     I got to know about many good sources and interactive visualization tools available.D3 community sources awere really helpful.
  
+6. __Future work__  
+Work on effective visualization o fjob position instead of stacked bar chart.  
+Improving the Geo Map visualization with size channel and by adding layers of data.
 
-__References__   
+
+7. __References__   
 http://maptimeboston.github.io/d3-maptime/  
 https://bl.ocks.org/mbostock/3885705  
 https://github.com/maptimeBoston/d3-maptime  
