@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="line.css">
+</head>
+<body>
+    <div id="chart"></div>
+    <script>
+        var data = [
+  {
+      name: "Approved",
+      values: [
+        {date: "2007", count: "246035"},
+        {date: "2008", count: "219264"},
+        {date: "2009", count: "183850"},
+        {date: "2010", count: "192276"},
+        {date: "2011", count: "207253"},
+        {date: "2012", count: "240440"},
+        {date: "2013", count: "232978"},
+        {date: "2014", count: "259812"},
+        {date: "2015", count: "307129"},
+        {date: "2016", count: "348162"},
+        {date: "2017", count: "298445"},
+      ]
+  },
+  {
+      name: "Recieved",
+      values: [
+        {date: "2007", count: "314621"},
+        {date: "2008", count: "285475"},
+        {date: "2009", count: "246126"},
+        {date: "2010", count: "248272"},
+        {date: "2011", count: "268412"},
+        {date: "2012", count: "308242"},
+        {date: "2013", count: "299690"},
+        {date: "2014", count: "325971"},
+        {date: "2015", count: "368852"},
+        {date: "2016", count: "399349"},
+        {date: "2017", count: "404087"},
+      ]
+  },
+  
+        ];
+
+        var width = 960;
+        var height = 500;
+        var margin = 100;
+        var duration = 150;
+
+        var lineOpacity = "0.25";
+        var lineOpacityHover = "0.85";
+        var otherLinesOpacityHover = "0.1";
+        var lineStroke = "1.5px";
+        var lineStrokeHover = "2.5px";
+
+        var circleOpacity = '0.85';
+        var circleOpacityOnLineHover = "0.25"
+        var circleRadius = 3;
+        var circleRadiusHover = 6;
+
+
+        /* Format Data */
+        var parseDate = d3.timeParse("%Y");
+        data.forEach(function(d) { 
+            d.values.forEach(function(d) {
+                d.date = parseDate(d.date);
+                d.count = +d.count;    
+            });
+        });
+
+
+        /* Scale */
+        var xScale = d3.scaleTime()
+          .domain(d3.extent(data[0].values, d => d.date))
+          .range([0, width-margin]);
+
+        var yScale = d3.scaleLinear()
+          .domain([0, d3.max(data[0].values, d => d.count)])
+          .range([height-margin, 0]);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        /* Add SVG */
+        var svg = d3.select("#chart").append("svg")
+          .attr("width", (width+margin)+"px")
+          .attr("height", (height+margin)+"px")
+          .append('g')
+          .attr("transform", `translate(${margin}, ${margin})`);
+        /* Add line into SVG */
+        var line = d3.line()
+          .x(d => xScale(d.date))
+          .y(d => yScale(d.count));
+
+        let lines = svg.append('g')
+          .attr('class', 'lines');
+
+        lines.selectAll('.line-group')
+          .data(data).enter()
+          .append('g')
+          .attr('class', 'line-group')  
+          .on("mouseover", function(d, i) {
+              svg.append("text")
+                .attr("class", "title-text")
+                .style("fill", color(i))        
+                .text(d.name)
+                .attr("text-anchor", "middle")
+                .attr("x", (width-margin)/2)
+                .attr("y", 5);
+          })
+          .on("mouseout", function(d) {
+              svg.select(".title-text");
+          })
+          .append('path')
+          .attr('class', 'line')  
+          .attr('d', d => line(d.values))
+          .style('stroke', (d, i) => color(i))
+          .style('opacity', lineOpacity)
+          .on("mouseover", function(d) {
+              d3.selectAll('.line')
+                            .style('opacity', otherLinesOpacityHover);
+              d3.selectAll('.circle')
+                            .style('opacity', circleOpacityOnLineHover);
+              d3.select(this)
+                .style('opacity', lineOpacityHover)
+                .style("stroke-width", lineStrokeHover)
+                .style("cursor", "pointer");
+          });
+          //.on("mouseout", function(d) {
+            //  d3.selectAll(".line")
+                            //.style('opacity', lineOpacity);
+            //  d3.selectAll('.circle')
+              //              .style('opacity', circleOpacity);
+             // d3.select(this)
+              //  .style("stroke-width", lineStroke)
+               // .style("cursor", "none");
+         // });
+
+
+        /* Add circles in the line */
+        lines.selectAll("circle-group")
+          .data(data).enter()
+          .append("g")
+          .style("fill", (d, i) => color(i))
+          .selectAll("circle")
+          .data(d => d.values).enter()
+          .append("g")
+          .attr("class", "circle")  
+          .on("mouseover", function(d) {
+              d3.select(this)     
+                .style("cursor", "pointer")
+                .append("text")
+                .attr("class", "text")
+                .text(`${d.count}`)
+                .attr("x", d => xScale(d.date) + 5)
+                .attr("y", d => yScale(d.count) - 10);
+        })
+  .on("mouseout", function(d) {
+      d3.select(this)
+        .style("cursor", "none")  
+       .transition()
+        .duration(duration);
+       // .selectAll(".text").remove();
+  })
+  .append("circle")
+  .attr("cx", d => xScale(d.date))
+  .attr("cy", d => yScale(d.count))
+  .attr("r", circleRadius)
+  //.style('opacity', circleOpacity)
+  .on("mouseover", function(d) {
+      d3.select(this)
+        .transition()
+        .duration(duration)
+        .attr("r", circleRadiusHover);
+  });
+    //.on("mouseout", function(d) {
+      //  d3.select(this) 
+        //  .transition()
+        //  .duration(duration)
+         // .attr("r", circleRadius);  
+  //  });
+
+
+        /* Add Axis into SVG */
+        var xAxis = d3.axisBottom(xScale).ticks(9);
+        var yAxis = d3.axisLeft(yScale).ticks(5);
+
+        svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", `translate(0, ${height-margin})`)
+  .call(xAxis);
+
+        svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .append('text')
+          .attr("y", 15)
+          .attr("transform", "rotate(-90)")
+          .attr("fill", "#000")
+          .text("Total count of H-1B");
+    </script>
+    <div style="position:absolute;left:10%;">
+        <h3>Line Graph:Approved H-1B petition Vs recieved H-1b Petition applications</h3>
+        
+        <p>Hover on the line will show H-1B petition Approved or Recieved status</p>
+        <p>Hover on points to see the eaxct count of petitons with respect to the year</p>
+        <p>Analysis:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased.</p>
+        <p>The number of employment-based immigrant visas statutorily allocated per year has remained unchanged since the passage of the Immigration Act of 1990.
+         In the intervening 25 years, the country's economy has expanded dramatically.
+         The size of the U.S. economy, as measured by U.S. gross domestic product (GDP), increased by about 83 percent since 1990, rising from $8.955 trillion in 1990 to $16.397 trillion in 2015.
+         Over the same period, GDP per capita increased by just over 42 percent, rising from $35,794 in 1990 to $50,970 in 2015.</p>
+        <!--<h4>Question:How is the growth of Approved H1-B petiton Vs Recieved H1-B aaplications?</h4>
+        <h4>Inference made:In the year 2017,due to the changes made in the Employment eligibility rule,the approved H1-B visa number decreased. </h4>-->
+    </div>
+</body>
+</html>
