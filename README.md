@@ -74,5 +74,10 @@ http://christopheviau.com/d3list/
 http://bl.ocks.org/mgold/6a32cec6380b6ce75c1e  
 https://onlinehelp.tableau.com/  
 
+Data sources
+https://www.census.gov/data/tables/2016/demo/popest/state-total.html  
+https://www.uscis.gov/tools/reports-studies/reports-and-studies  
+https://www.foreignlaborcert.doleta.gov/performancedata.cfm  
+https://www.uscis.gov/tools/reports-studies/immigration-forms-data
 
 
