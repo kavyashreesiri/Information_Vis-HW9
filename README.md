@@ -75,7 +75,16 @@ These are the attributes that are relevant to my analysis and were obtained afte
       In 2014, the H1-B cap was 65,000.In 2016,it was increased to 110,000 per year.   
       Interactive elements employed:   
       Tooltip, Highlighting,selecting and sorting in asceding order
-
+    * __Visualization 4__
+     
+    * __Visualization 5__  
+    __GeoMap shows distribution of Average salary in each state for H-1B Visa Employment__  
+      Click on + or - state to Zoom-in and Zoom-out.  
+      Hover on circle to get details of the state and average salary of the state  
+      A layer of US population is added to understand how average salry is varying with population  
+      Blue bubbles give information about Average salry of the state.  
+     `Analysis:`  
+      More dense area can be seen in the Boston, Southern California, Illinois.Average salry is less in states withh more population.
     * __Visualization 6__  
       __Stacked Bar Graph:Depicts the number of petitions each position is contributing from the total number of petitions.__  
         Donut Chart: Gives a more detailed overview about the top ten positions in the list of H-1B.  
