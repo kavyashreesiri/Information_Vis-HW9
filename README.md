@@ -66,9 +66,10 @@ These are the attributes that are relevant to my analysis and were obtained afte
       Storytelling elements:  
         Checking the Sort values button will sort the bars in ascending order of H1-B petitions alongwith the worksites.  
         Select the year of interest and sort the bars.   
-      Analysis:Top 5 states remained in the same position with respect count of H1-B petitions filed.   
+      'Analysis:'Top 5 states remained in the same position with respect count of H1-B petitions filed.   
       California,Texas,Illions,New Jersy,Massachusetts are the states with highest numbe rof H-1B Visa applications.  
-      Interactive elements employed:  
+      In 2014, the H1-B cap was 65,000.In 2016,it was increased to 110,000 per year.   
+      'Interactive elements employed:'   
       Tooltip, Highlighting,selecting and sorting in asceding order
 
 
